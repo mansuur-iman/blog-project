@@ -67,7 +67,7 @@ This frontend consumes data from a shared Blog API backend that handles:
 Clone the repository:
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/mansuur-iman/blog-project.git
 
 cd blog-project
 
