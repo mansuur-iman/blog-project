@@ -1,0 +1,78 @@
+.wrapper {
+  height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 1px 1px 2px solid var(--accent);
+  background-color: var(--bg);
+  border-radius: 2rem;
+  margin: auto;
+}
+
+.error {
+  color: red;
+  align-items: center;
+  font-size: 1rem;
+}
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text);
+}
+.intro {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--s-text);
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  gap: 1rem;
+}
+.div {
+  display: flex;
+  flex-direction: column;
+}
+
+.div input {
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background-color: var(--s-bg);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+  border: none;
+}
+
+.div input:focus-within {
+  border: 1px solid var(--accent);
+  background-color: var(--bg);
+}
+
+button {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+  border: 1px solid var(--accent);
+  transition: bacground-color 0.3s ease;
+}
+button:hover {
+  background-color: var(--accent);
+  border: none;
+}
+.redirect {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--s-text);
+  text-transform: capitalize;
+}

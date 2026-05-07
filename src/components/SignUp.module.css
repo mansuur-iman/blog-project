@@ -1,0 +1,87 @@
+.wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px -2px -2px 2px solid var(--shadow);
+}
+.error {
+  color: red;
+  align-items: center;
+  font-size: 0.9rem;
+}
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text);
+}
+.intro {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--s-text);
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  gap: 1.5rem;
+}
+.div {
+  display: flex;
+  align-items: center;
+}
+
+.div input {
+  cursor: pointer;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: var(--s-bg);
+  color: var(--text);
+  outline: none;
+  border: none;
+}
+.div input:focus-within {
+  border: 1px solid var(--accent);
+  background-color: var(--bg);
+}
+
+.redirect {
+  color: var(--s-text);
+  font-weight: 500;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+.roleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  font-size: 14px;
+}
+
+.roleGroup label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 450px) {
+  h1 {
+    font-size: 1rem;
+  }
+}

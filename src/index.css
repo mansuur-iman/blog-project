@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Aldrich&family=Pacifico&family=Playwrite+DK+Uloopet+Guides&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 16px;
+
+  font-family: "Aldrich", sans-serif;
+}
+
+.light {
+  --bg: #ffffff;
+  --s-bg: #e7dbdbee;
+  --text: #000000;
+  --s-text: #0000005e;
+  --accent: #ff4800;
+  --shadow: #e9dde9c9;
+}
+
+.dark {
+  --bg: #121212;
+  --s-bg: rgb(1, 1, 107);
+  --text: #ffffff;
+  --s-text: #d1c7c7ee;
+  --accent: #006aff;
+  --shadow: #a088b8;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}

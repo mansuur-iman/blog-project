@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Playwrite+DK+Uloopet+Guides&display=swap");
+
+nav {
+  height: 65px;
+  background-color: var(--bg);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.linksContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+nav a {
+  height: 100%;
+  padding: 0 1.2rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text);
+}
+
+nav a:hover {
+  background-color: var(--accent);
+}
+
+nav .homeLink {
+  margin-right: auto;
+  font-family: "Playwrite DK Uloopet Guides", sans-serif;
+  font-weight: bold;
+  font-size: 2rem;
+  color: var(--accent);
+  background-color: var(--text);
+  border-radius: 50%;
+}
+
+nav .homeLink:hover {
+  background-color: var(--text);
+}
+
+nav svg {
+  color: var(--text);
+}
+
+.input {
+  display: none;
+}
+
+.open-sidebar-button,
+.close-sidebar-button {
+  display: none;
+}
+
+.searchContainer {
+  display: flex;
+  flex-direction: row; /* Force row alignment */
+  flex-wrap: nowrap; /* Prevent wrapping to a second line */
+  align-items: center; /* Vertically center icon and text */
+  gap: 10px; /* Modern way to add space between icon and input */
+
+  width: 200px; /* Give it a defined width */
+  background-color: var(--bg);
+  border-radius: 2rem;
+  padding: 5px 15px; /* Adjust padding for a sleeker look */
+  border: 1px solid transparent; /* Temporary border to see the box */
+  transition: border 0.5s ease-out;
+}
+.searchContainer:focus-within {
+  border: 1px solid var(--accent);
+}
+
+.searchIcon {
+  color: var(--text);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.toggleIcon {
+  cursor: pointer;
+  border: none;
+  align-items: center;
+  background-color: var(--bg);
+}
+
+.toggleIcon svg {
+  color: var(--text);
+}
+
+.searchInput {
+  width: 100%;
+  border: none;
+  outline: none;
+  color: var(--text);
+  background-color: transparent;
+  font-size: 1rem;
+  opacity: 1;
+}
+
+@media (max-width: 800px) {
+  nav .homeLink {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .linksContainer {
+    flex-direction: column;
+    align-items: flex-start;
+
+    position: fixed;
+    top: 0;
+    right: -100%;
+    z-index: 10;
+    width: 300px;
+
+    background-color: var(--bg);
+    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
+
+    transition: 0.75s ease-out;
+  }
+
+  nav a {
+    height: auto;
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    justify-content: flex-start;
+  }
+
+  nav .homeLink {
+    font-size: 1.2rem;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .open-sidebar-button,
+  .close-sidebar-button {
+    padding: 1.2rem;
+    display: block;
+  }
+
+  .input:checked ~ .linksContainer {
+    right: 0;
+  }
+  .input:checked ~ .overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9;
+  }
+}

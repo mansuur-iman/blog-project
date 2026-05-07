@@ -1,0 +1,12 @@
+.layout {
+  min-height: screen;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1500px;
+  margin: auto;
+}
+.main {
+  flex: 1;
+  padding: 2rem;
+}
