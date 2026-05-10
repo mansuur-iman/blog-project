@@ -1,110 +1,339 @@
-/* Page wrapper */
+/* ── Page ──────────────────────────────────────── */
 .page {
-  max-width: 700px;
+  max-width: 740px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 48px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
 }
 
-/* Article */
-.article {
-  margin-bottom: 3rem;
+/* ── Loading / Error states ────────────────────── */
+.stateWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 16px;
 }
 
-/* Title */
-.title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-/* Meta */
-.meta {
-  font-size: 0.9rem;
+.stateText {
+  font-size: 14px;
   color: var(--s-text);
-  margin-bottom: 1.5rem;
 }
 
-/* Image */
-.image {
-  width: 100%;
-  margin: 1rem 0 1.5rem;
+.errorText {
+  color: var(--accent);
+  font-size: 15px;
 }
 
-/* Content */
-.content {
-  font-size: 1.05rem;
-  line-height: 1.7;
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--s-bg);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Article header ────────────────────────────── */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.description {
+  font-size: 18px;
+  color: var(--s-text);
+  line-height: 1.6;
+  border-left: 3px solid var(--accent);
+  padding-left: 14px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.authorChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.authorAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.authorName {
+  font-size: 14px;
+  font-weight: 600;
   color: var(--text);
 }
 
-/* Comments section */
+.dot {
+  color: var(--s-text);
+}
+
+.date {
+  font-size: 13px;
+  color: var(--s-text);
+}
+
+/* ── Cover image ───────────────────────────────── */
+.imageWrapper {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Article body ──────────────────────────────── */
+.content {
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--text);
+}
+
+/* Prose styling for HTML from TinyMCE */
+.content h1,
+.content h2,
+.content h3,
+.content h4 {
+  margin: 1.6em 0 0.5em;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.content p {
+  margin: 0 0 1.2em;
+}
+
+.content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.content img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 1em 0;
+}
+
+.content ul,
+.content ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.2em;
+}
+
+.content blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 16px;
+  color: var(--s-text);
+  font-style: italic;
+  margin: 1.5em 0;
+}
+
+.content code {
+  background: var(--s-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.content pre {
+  background: var(--s-bg);
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+
+/* ── Comments section ──────────────────────────── */
 .comments {
-  border-top: 1px solid var(--shadow);
-  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 32px;
+  border-top: 2px solid var(--s-bg);
 }
 
-/* Comments title */
 .commentsTitle {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
 }
 
-/* Comment list */
+.noComments {
+  font-size: 14px;
+  color: var(--s-text);
+}
+
+/* ── Comment list ──────────────────────────────── */
 .commentList {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 16px;
 }
 
-/* Single comment */
 .comment {
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid var(--shadow);
-}
-
-/* Comment text */
-.commentText {
-  font-size: 0.95rem;
-}
-
-/* No comments */
-.noComments {
-  font-size: 0.9rem;
-  color: var(--s-text);
-}
-
-/* Form */
-.form {
-  margin-top: 1.5rem;
   display: flex;
-  gap: 0.5rem;
+  gap: 12px;
+  align-items: flex-start;
 }
 
-/* Input */
+.commentAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--s-bg);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--s-text);
+}
+
+.commentBody {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.commentAuthor {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.commentText {
+  font-size: 14px;
+  color: var(--s-text);
+  line-height: 1.6;
+}
+
+/* ── Comment form ──────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.commentError {
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.inputRow {
+  display: flex;
+  gap: 8px;
+}
+
 .input {
   flex: 1;
-  padding: 0.5rem;
-  border: 1px solid var(--shadow);
-  background: transparent;
+  padding: 10px 14px;
+  border: 1px solid var(--s-text);
+  border-radius: 8px;
+  background: var(--s-bg);
   color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
   outline: none;
+  transition: border-color 0.2s;
+}
+
+.input::placeholder {
+  color: var(--s-text);
+  opacity: 0.6;
 }
 
 .input:focus {
-  border-bottom-color: var(--accent);
-  border-radius: 0.5rem;
+  border-color: var(--accent);
 }
 
-/* Button */
+.input:disabled {
+  opacity: 0.5;
+}
+
 .button {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--accent);
-  background: transparent;
-  color: var(--accent);
-  cursor: pointer;
-}
-
-.button:hover {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
   background: var(--accent);
   color: white;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
+  white-space: nowrap;
+}
+
+.button:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ────────────────────────────────── */
+@media (max-width: 600px) {
+  .page {
+    padding: 32px 16px 60px;
+    gap: 40px;
+  }
+
+  .content {
+    font-size: 16px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
 }

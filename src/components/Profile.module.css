@@ -1,0 +1,168 @@
+/* ── Page ──────────────────────────────────────── */
+.page {
+  max-width: 480px;
+  margin: 60px auto;
+  padding: 0 24px 80px;
+}
+
+/* ── States ────────────────────────────────────── */
+.stateWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  gap: 14px;
+}
+
+.stateText {
+  font-size: 14px;
+  color: var(--s-text);
+}
+
+.errorText {
+  font-size: 15px;
+  color: var(--accent);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--s-bg);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Card ──────────────────────────────────────── */
+.card {
+  background: var(--s-bg);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Avatar row ────────────────────────────────── */
+.avatarWrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: -1px;
+}
+
+.avatarInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.username {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.role {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+/* ── Divider ───────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--bg);
+}
+
+/* ── Fields ────────────────────────────────────── */
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--s-text);
+}
+
+.value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.unset {
+  color: var(--s-text);
+  font-style: italic;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+/* ── Logout button ─────────────────────────────── */
+.logoutBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+  align-self: flex-start;
+}
+
+.logoutBtn:hover {
+  background: rgba(255, 72, 0, 0.08);
+}
+
+/* ── Responsive ────────────────────────────────── */
+@media (max-width: 480px) {
+  .page {
+    margin: 32px auto;
+    padding: 0 16px 60px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+}

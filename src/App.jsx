@@ -3,7 +3,7 @@ import Layout from "./components/Layout.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
 import Home from "./components/Home.jsx";
 import Search from "./components/Search.jsx";
-import About from "./components/About.jsx";
+
 import Login from "./components/Login.jsx";
 import SignUp from "./components/SignUp.jsx";
 import Profile from "./components/Profile.jsx";
@@ -20,10 +20,7 @@ function App() {
           index: true,
           element: <Home />,
         },
-        {
-          path: "about",
-          element: <About />,
-        },
+
         {
           path: "search",
           element: <Search />,

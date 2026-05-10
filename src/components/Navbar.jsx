@@ -1,51 +1,108 @@
 import styles from "./Navbar.module.css";
-import { Search, Menu, X, Sun, Moon, User } from "lucide-react";
+import { Search, Menu, X, Sun, Moon } from "lucide-react";
 import useTheme from "../context/useTheme";
 import useAuth from "../context/useAuth";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { useState } from "react";
+
 export default function Navbar() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const navigate = useNavigate();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
+    if (!searchTerm.trim()) return;
     navigate(`/search?term=${encodeURIComponent(searchTerm)}`);
+    setMenuOpen(false);
   };
+
+  const closeMenu = () => setMenuOpen(false);
+
+  const initial = user?.username?.charAt(0).toUpperCase() ?? "?";
+
   return (
-    <nav>
-      <input type="checkbox" id="sidebar-active" className={styles.input} />
-      <label htmlFor="sidebar-active" className={styles["open-sidebar-button"]}>
-        <Menu size={32} />
-      </label>
+    <>
+      {menuOpen && (
+        <div
+          className={styles.overlay}
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
+      )}
 
-      <label
-        htmlFor="sidebar-active"
-        id="overlay"
-        className={styles.overlay}
-      ></label>
-
-      <div className={styles.linksContainer}>
-        <label
-          htmlFor="sidebar-active"
-          className={styles["close-sidebar-button"]}
-        >
-          <X size={32} />
-        </label>
-
-        <a className={styles.homeLink} href="/">
+      <nav className={styles.nav}>
+        {/* Brand */}
+        <Link to="/" className={styles.brand} onClick={closeMenu}>
           myBlog
-        </a>
+        </Link>
 
+        {/* Desktop search — only when logged in */}
+        {token && (
+          <form className={styles.searchForm} onSubmit={handleSearchSubmit}>
+            <Search size={16} className={styles.searchIcon} />
+            <input
+              type="text"
+              placeholder="Search blogs..."
+              className={styles.searchInput}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </form>
+        )}
+
+        <div className={styles.actions}>
+          {token ? (
+            /* ── Logged in ── */
+            <button
+              type="button"
+              className={styles.avatarBtn}
+              onClick={() => navigate("/profile")}
+              aria-label="Go to profile"
+              title={user?.username ?? "Profile"}
+            >
+              {initial}
+            </button>
+          ) : (
+            /* ── Logged out ── */
+            <>
+              <Link to="/login" className={styles.loginLink}>
+                Log in
+              </Link>
+              <Link to="/register" className={styles.signupBtn}>
+                Sign up
+              </Link>
+            </>
+          )}
+
+          <button
+            type="button"
+            className={styles.iconBtn}
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+          >
+            {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+          </button>
+
+          <button
+            type="button"
+            className={`${styles.iconBtn} ${styles.hamburger}`}
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile drawer */}
+      <div className={`${styles.drawer} ${menuOpen ? styles.drawerOpen : ""}`}>
         {token ? (
           <>
-            <form
-              className={styles.searchContainer}
-              onSubmit={handleSearchSubmit}
-            >
-              <Search size={25} className={styles.searchIcon} />
+            <form className={styles.drawerSearch} onSubmit={handleSearchSubmit}>
+              <Search size={16} className={styles.searchIcon} />
               <input
                 type="text"
                 placeholder="Search blogs..."
@@ -54,21 +111,50 @@ export default function Navbar() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </form>
-            <button>
-              <User size={24} onClick={() => navigate("/profile")} />
+
+            {/* User info row */}
+            <div className={styles.drawerUser}>
+              <div className={styles.drawerAvatar}>{initial}</div>
+              <div className={styles.drawerUserInfo}>
+                <span className={styles.drawerUsername}>{user?.username}</span>
+                <span className={styles.drawerRole}>{user?.role}</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className={styles.drawerLink}
+              onClick={() => {
+                navigate("/profile");
+                closeMenu();
+              }}
+            >
+              Profile
             </button>
           </>
         ) : (
           <>
-            <a href="/login">Login</a>
-            <a href="/register">Sign up</a>
+            {/* Prompt to log in */}
+            <p className={styles.drawerPrompt}>
+              Sign in to read and comment on posts.
+            </p>
+            <Link
+              to="/login"
+              className={styles.drawerLoginBtn}
+              onClick={closeMenu}
+            >
+              Log in
+            </Link>
+            <Link
+              to="/register"
+              className={styles.drawerLink}
+              onClick={closeMenu}
+            >
+              Create an account
+            </Link>
           </>
         )}
-
-        <button onClick={toggleTheme} className={styles.toggleIcon}>
-          {theme === "light" ? <Moon size={24} /> : <Sun size={24} />}
-        </button>
       </div>
-    </nav>
+    </>
   );
 }

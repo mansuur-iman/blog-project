@@ -1,22 +1,30 @@
 import { useEffect, useState } from "react";
+import { useSearchParams, useNavigate } from "react-router";
 import useAuth from "../context/useAuth";
+import { ArrowRight } from "lucide-react";
+import styles from "./Search.module.css";
 
 export default function Search() {
   const [posts, setPosts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { token } = useAuth();
 
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  // bug fix: was never reading the URL — searchTerm was always ""
+  const term = searchParams.get("term") || "";
+
   useEffect(() => {
-    if (!searchTerm) return;
+    if (!term.trim()) return;
 
     const searchPost = async () => {
       try {
+        setLoading(true);
+        setError("");
         const res = await fetch(
-          `https://blog-api-7iix.onrender.com/api/v1/posts/search?term=${encodeURIComponent(
-            searchTerm,
-          )}&page=1&limit=10&sort=desc`,
+          `https://blog-api-7iix.onrender.com/api/v1/posts/search?term=${encodeURIComponent(term)}&page=1&limit=10&sort=desc`,
           {
-            method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
@@ -25,36 +33,106 @@ export default function Search() {
         );
 
         if (res.status === 401) {
-          console.error("Invalid or expired token");
+          setError("Session expired. Please log in again.");
           return;
         }
 
-        const data = await res.json();
-        console.log("result", data);
+        if (!res.ok) throw new Error("Search failed.");
 
-        setPosts(data);
+        const data = await res.json();
+        // handle both {posts: [...]} and [...] response shapes
+        setPosts(Array.isArray(data) ? data : data.posts || []);
       } catch (err) {
         console.error(err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
     };
 
     if (token) searchPost();
-  }, [searchTerm, token]);
+  }, [term, token]);
 
   return (
-    <div>
-      {posts.length === 0 ? (
-        <p>No posts found.</p>
-      ) : (
-        <ul>
+    <div className={styles.page}>
+      {/* Header */}
+      <div className={styles.header}>
+        <p className={styles.label}>Search results for</p>
+        <h1 className={styles.term}>"{term}"</h1>
+        {!loading && posts.length > 0 && (
+          <span className={styles.count}>
+            {posts.length} result{posts.length !== 1 ? "s" : ""}
+          </span>
+        )}
+      </div>
+
+      {/* States */}
+      {loading && (
+        <div className={styles.stateWrap}>
+          <div className={styles.spinner} />
+          <p className={styles.stateText}>Searching...</p>
+        </div>
+      )}
+
+      {error && !loading && <p className={styles.errorText}>{error}</p>}
+
+      {!loading && !error && !term.trim() && (
+        <p className={styles.empty}>
+          Enter a search term in the nav bar to find posts.
+        </p>
+      )}
+
+      {!loading && !error && term && posts.length === 0 && (
+        <div className={styles.stateWrap}>
+          <p className={styles.empty}>No posts found for "{term}".</p>
+        </div>
+      )}
+
+      {/* Results */}
+      {!loading && posts.length > 0 && (
+        <div className={styles.results}>
           {posts.map((post) => (
-            <li key={post.id} className="mb-4">
-              <h3 className="font-bold">{post.title}</h3>
-              <p>{post.text.slice(0, 100)}...</p>
-              <small>By {post.author.username}</small>
-            </li>
+            <article
+              key={post.id}
+              className={styles.card}
+              onClick={() => navigate(`/blog/${post.id}`)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) =>
+                e.key === "Enter" && navigate(`/blog/${post.id}`)
+              }
+            >
+              {post.imageUrl && (
+                <div className={styles.imgWrap}>
+                  <img
+                    src={post.imageUrl}
+                    alt={post.title}
+                    className={styles.img}
+                  />
+                </div>
+              )}
+              <div className={styles.cardBody}>
+                <span className={styles.author}>@{post.author?.username}</span>
+                <h3 className={styles.title}>{post.title}</h3>
+                {post.description && (
+                  <p className={styles.desc}>{post.description}</p>
+                )}
+                <div className={styles.footer}>
+                  <span className={styles.date}>
+                    {new Date(post.createdAt).toLocaleDateString(undefined, {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </span>
+                  <span className={styles.readMore}>
+                    Read <ArrowRight size={13} />
+                  </span>
+                </div>
+              </div>
+            </article>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

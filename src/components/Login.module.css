@@ -1,78 +1,226 @@
-.wrapper {
-  height: 100%;
-  width: 100%;
-  max-width: 1200px;
+/* ── Page ──────────────────────────────────────── */
+.page {
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  box-shadow: 1px 1px 2px solid var(--accent);
-  background-color: var(--bg);
-  border-radius: 2rem;
-  margin: auto;
+  justify-content: center;
+  padding: 40px 20px;
+  background: var(--bg);
 }
 
-.error {
-  color: red;
-  align-items: center;
-  font-size: 1rem;
+/* ── Card ──────────────────────────────────────── */
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--s-bg);
+  border-radius: 16px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
-h2 {
-  font-size: 2rem;
-  font-weight: bold;
+
+/* ── Header ────────────────────────────────────── */
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
   color: var(--text);
+  margin: 0;
+  letter-spacing: -0.4px;
 }
-.intro {
-  font-size: 1rem;
-  font-weight: 500;
+
+.subtitle {
+  font-size: 14px;
+  color: var(--s-text);
+  margin: 0;
+}
+
+/* ── API error ─────────────────────────────────── */
+.apiError {
+  background: rgba(255, 72, 0, 0.08);
+  border: 1px solid rgba(255, 72, 0, 0.25);
+  color: var(--accent);
+  border-radius: 9px;
+  padding: 11px 14px;
+  font-size: 14px;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Form ──────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
   color: var(--s-text);
 }
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  gap: 1rem;
-}
-.div {
-  display: flex;
-  flex-direction: column;
-}
 
-.div input {
+/* ── Input ─────────────────────────────────────── */
+.input {
   width: 100%;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  background-color: var(--s-bg);
+  padding: 10px 14px;
+  border: 1px solid var(--s-text);
+  border-radius: 8px;
+  background: var(--bg);
   color: var(--text);
-  font-size: 1rem;
+  font-size: 14px;
+  font-family: inherit;
   outline: none;
-  border: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  opacity: 0.9;
 }
 
-.div input:focus-within {
-  border: 1px solid var(--accent);
-  background-color: var(--bg);
-}
-
-button {
-  cursor: pointer;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  background-color: var(--bg);
-  color: var(--text);
-  font-size: 1rem;
-  border: 1px solid var(--accent);
-  transition: bacground-color 0.3s ease;
-}
-button:hover {
-  background-color: var(--accent);
-  border: none;
-}
-.redirect {
-  font-size: 1rem;
-  font-weight: 500;
+.input::placeholder {
   color: var(--s-text);
-  text-transform: capitalize;
+  opacity: 0.5;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 72, 0, 0.1);
+  opacity: 1;
+}
+
+.inputError {
+  border-color: var(--accent);
+}
+
+.fieldError {
+  font-size: 12px;
+  color: var(--accent);
+  margin: 0;
+}
+
+/* ── Password toggle ───────────────────────────── */
+.passwordWrap {
+  position: relative;
+}
+
+.passwordWrap .input {
+  padding-right: 40px;
+}
+
+.eyeBtn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--s-text);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+
+.eyeBtn:hover {
+  color: var(--text);
+}
+
+/* ── Submit button ─────────────────────────────── */
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 4px;
+  transition:
+    opacity 0.2s,
+    transform 0.15s;
+}
+
+.submitBtn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.submitBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Spinner ───────────────────────────────────── */
+.spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Redirect ──────────────────────────────────── */
+.redirect {
+  text-align: center;
+  font-size: 14px;
+  color: var(--s-text);
+  margin: 0;
+}
+
+.redirectLink {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.redirectLink:hover {
+  text-decoration: underline;
+}
+
+/* ── Responsive ────────────────────────────────── */
+@media (max-width: 480px) {
+  .card {
+    padding: 24px 20px;
+  }
 }

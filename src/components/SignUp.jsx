@@ -1,6 +1,21 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
+import { Eye, EyeOff } from "lucide-react";
 import styles from "./SignUp.module.css";
+
+const validate = (formData) => {
+  const errors = {};
+  if (!formData.firstName.trim()) errors.firstName = "First name is required.";
+  if (!formData.lastName.trim()) errors.lastName = "Last name is required.";
+  if (!formData.username.trim()) errors.username = "Username is required.";
+  if (!formData.email || !formData.email.includes("@"))
+    errors.email = "A valid email is required.";
+  if (formData.password.length < 8)
+    errors.password = "Password must be at least 8 characters.";
+  if (formData.confirmPassword !== formData.password)
+    errors.confirmPassword = "Passwords do not match.";
+  return errors;
+};
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -13,190 +28,254 @@ export default function SignUp() {
     role: "READER",
   });
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    setErrors({ ...errors, [e.target.name]: "" });
-  };
-
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.firstName) newErrors.firstName = "FirstName is required.";
-    if (!formData.lastName) newErrors.lastName = "LastName is required.";
-    if (!formData.username) newErrors.username = "username is required.";
-    if (!formData.email || !formData.email.includes("@"))
-      newErrors.email = "Email is required or invalid Email.";
-    if (formData.password.length < 8)
-      newErrors.password = "Password must be atleast 8 characters.";
-    if (formData.confirmPassword !== formData.password)
-      newErrors.confirmPassword = "Password do not match.";
-    return newErrors;
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "", apiError: "" }));
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    console.log("Form submitted");
-
-    const validationResult = validate();
-    console.log("Validation result:", validationResult);
-
-    if (Object.keys(validationResult).length > 0) {
-      setErrors(validationResult);
+    const validationErrors = validate(formData);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
-    console.log("Sending fetch request...");
-
-    const res = await fetch(
-      "https://blog-api-7iix.onrender.com/api/v1/users/register",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      setLoading(true);
+      const res = await fetch(
+        "https://blog-api-7iix.onrender.com/api/v1/users/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+            confirm_password: formData.confirmPassword,
+            role: formData.role,
+          }),
         },
-        body: JSON.stringify({
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-          confirm_password: formData.confirmPassword,
-          role: formData.role,
-        }),
-      },
-    );
+      );
 
-    const data = await res.json();
+      const data = await res.json();
 
-    console.log("API response:", data);
+      if (!res.ok) {
+        setErrors({ apiError: data.msg || "Registration failed." });
+        return;
+      }
 
-    if (!res.ok) {
-      setErrors({ apiError: data.msg || "registration failed." });
-    } else {
       navigate("/login");
+    } catch (err) {
+      console.error(err);
+      setErrors({ apiError: "Network error. Check your connection." });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className={styles.wrapper}>
-      {errors.apiError && <p className={styles.error}>{errors.apiError}</p>}
-      <h2>Create an Account.</h2>
-      <p className={styles.intro}>Join us and start your journey</p>
-      <form onSubmit={handleRegister}>
-        <div className={styles.div}>
-          <input
-            type="text"
-            placeholder="First Name"
-            name="firstName"
-            value={formData.firstName}
-            required
-            autoComplete="firstName"
-            onChange={handleChange}
-          />
-          {errors.firstName && (
-            <p className={styles.error}>{errors.firstName}</p>
-          )}
+    <div className={styles.page}>
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h2 className={styles.title}>Create an account</h2>
+          <p className={styles.subtitle}>Join us and start your journey</p>
         </div>
 
-        <div className={styles.div}>
-          <input
-            type="text"
-            placeholder="Last Name"
-            name="lastName"
-            value={formData.lastName}
-            required
-            autoComplete="lastName"
-            onChange={handleChange}
-          />
-          {errors.lastName && <p className={styles.error}>{errors.lastName}</p>}
-        </div>
-        <div className={styles.div}>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            placeholder="Username"
-            required
-            autoComplete="username"
-            onChange={handleChange}
-          />
-          {errors.username && <p className={styles.error}>{errors.username}</p>}
-        </div>
-        <div className={styles.div}>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            placeholder="Email"
-            required
-            autoComplete="email"
-            onChange={handleChange}
-          />
-          {errors.email && <p className={styles.error}>{errors.email}</p>}
-        </div>
-        <div className={styles.div}>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            placeholder="Password"
-            required
-            autoComplete="password"
-            onChange={handleChange}
-          />
-          {errors.password && <p className={styles.error}>{errors.password}</p>}
-        </div>
-        <div className={styles.div}>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            placeholder="Confirm Password"
-            required
-            autoComplete="confirmPassword"
-            onChange={handleChange}
-          />
-          {errors.confirmPassword && (
-            <p className={styles.error}>{errors.confirmPassword}</p>
-          )}
-        </div>
-        <div className={styles.roleGroup}>
-          <p>Account Type</p>
+        {errors.apiError && (
+          <div className={styles.apiError} role="alert">
+            {errors.apiError}
+          </div>
+        )}
 
-          <label>
+        <form onSubmit={handleRegister} className={styles.form} noValidate>
+          {/* Name row */}
+          <div className={styles.row}>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="firstName">
+                First Name
+              </label>
+              <input
+                id="firstName"
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                autoComplete="given-name"
+                placeholder="John"
+                className={`${styles.input} ${errors.firstName ? styles.inputError : ""}`}
+              />
+              {errors.firstName && (
+                <p className={styles.fieldError}>{errors.firstName}</p>
+              )}
+            </div>
+
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="lastName">
+                Last Name
+              </label>
+              <input
+                id="lastName"
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                autoComplete="family-name"
+                placeholder="Doe"
+                className={`${styles.input} ${errors.lastName ? styles.inputError : ""}`}
+              />
+              {errors.lastName && (
+                <p className={styles.fieldError}>{errors.lastName}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Username */}
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="username">
+              Username
+            </label>
             <input
-              type="radio"
-              name="role"
-              value="READER"
-              checked={formData.role === "READER"}
+              id="username"
+              type="text"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
+              autoComplete="username"
+              placeholder="johndoe"
+              className={`${styles.input} ${errors.username ? styles.inputError : ""}`}
             />
-            Reader
-          </label>
+            {errors.username && (
+              <p className={styles.fieldError}>{errors.username}</p>
+            )}
+          </div>
 
-          <label>
+          {/* Email */}
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="email">
+              Email
+            </label>
             <input
-              type="radio"
-              name="role"
-              value="AUTHOR"
-              checked={formData.role === "AUTHOR"}
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
+              autoComplete="email"
+              placeholder="you@example.com"
+              className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
             />
-            Author
-          </label>
-        </div>
+            {errors.email && (
+              <p className={styles.fieldError}>{errors.email}</p>
+            )}
+          </div>
 
-        <button type="submit">submit</button>
-      </form>
-      <p className={styles.redirect}>
-        Already have an account <a href="/login">Log in</a>
-      </p>
+          {/* Password */}
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="password">
+              Password
+            </label>
+            <div className={styles.passwordWrap}>
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                autoComplete="new-password"
+                placeholder="••••••••"
+                className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
+              />
+              <button
+                type="button"
+                className={styles.eyeBtn}
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+              </button>
+            </div>
+            {errors.password && (
+              <p className={styles.fieldError}>{errors.password}</p>
+            )}
+          </div>
+
+          {/* Confirm password */}
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="confirmPassword">
+              Confirm Password
+            </label>
+            <div className={styles.passwordWrap}>
+              <input
+                id="confirmPassword"
+                type={showConfirm ? "text" : "password"}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                autoComplete="new-password"
+                placeholder="••••••••"
+                className={`${styles.input} ${errors.confirmPassword ? styles.inputError : ""}`}
+              />
+              <button
+                type="button"
+                className={styles.eyeBtn}
+                onClick={() => setShowConfirm((v) => !v)}
+                aria-label={showConfirm ? "Hide password" : "Show password"}
+              >
+                {showConfirm ? <EyeOff size={15} /> : <Eye size={15} />}
+              </button>
+            </div>
+            {errors.confirmPassword && (
+              <p className={styles.fieldError}>{errors.confirmPassword}</p>
+            )}
+          </div>
+
+          {/* Account type */}
+          <div className={styles.roleGroup}>
+            <p className={styles.label}>Account type</p>
+            <div className={styles.roleOptions}>
+              {["READER", "AUTHOR"].map((r) => (
+                <label
+                  key={r}
+                  className={`${styles.roleOption} ${formData.role === r ? styles.roleActive : ""}`}
+                >
+                  <input
+                    type="radio"
+                    name="role"
+                    value={r}
+                    checked={formData.role === r}
+                    onChange={handleChange}
+                    className={styles.radioHidden}
+                  />
+                  {r.charAt(0) + r.slice(1).toLowerCase()}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <button type="submit" disabled={loading} className={styles.submitBtn}>
+            {loading ? <span className={styles.spinner} aria-hidden /> : null}
+            {loading ? "Creating account..." : "Create account"}
+          </button>
+        </form>
+
+        <p className={styles.redirect}>
+          Already have an account?{" "}
+          <Link to="/login" className={styles.redirectLink}>
+            Log in
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

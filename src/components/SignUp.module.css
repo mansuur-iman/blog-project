@@ -1,87 +1,287 @@
-.wrapper {
-  width: 100%;
-  max-width: 1200px;
-  margin: auto;
+/* ── Page ──────────────────────────────────────── */
+.page {
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 2px 2px -2px -2px 2px solid var(--shadow);
+  padding: 40px 20px;
+  background: var(--bg);
 }
-.error {
-  color: red;
-  align-items: center;
-  font-size: 0.9rem;
-}
-h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--text);
-}
-.intro {
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--s-text);
-}
-form {
+
+/* ── Card ──────────────────────────────────────── */
+.card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--s-bg);
+  border-radius: 16px;
+  padding: 36px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 1.5rem;
-  gap: 1.5rem;
+  gap: 24px;
 }
-.div {
+
+/* ── Header ────────────────────────────────────── */
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--s-text);
+  margin: 0;
+}
+
+/* ── API error ─────────────────────────────────── */
+.apiError {
+  background: rgba(255, 72, 0, 0.08);
+  border: 1px solid rgba(255, 72, 0, 0.25);
+  color: var(--accent);
+  border-radius: 9px;
+  padding: 11px 14px;
+  font-size: 14px;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Form ──────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Two-column row for first/last name */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ── Field ─────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--s-text);
+}
+
+/* ── Input ─────────────────────────────────────── */
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--s-text);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  opacity: 0.9;
+}
+
+.input::placeholder {
+  color: var(--s-text);
+  opacity: 0.5;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 72, 0, 0.1);
+  opacity: 1;
+}
+
+.inputError {
+  border-color: var(--accent);
+}
+
+.fieldError {
+  font-size: 12px;
+  color: var(--accent);
+  margin: 0;
+}
+
+/* ── Password visibility ───────────────────────── */
+.passwordWrap {
+  position: relative;
+}
+
+.passwordWrap .input {
+  padding-right: 40px;
+}
+
+.eyeBtn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--s-text);
+  cursor: pointer;
+  padding: 4px;
   display: flex;
   align-items: center;
+  border-radius: 4px;
+  transition: color 0.15s;
 }
 
-.div input {
-  cursor: pointer;
-  width: 100%;
-  padding: 1.5rem;
-  border-radius: 2rem;
-  font-size: 1rem;
-  font-weight: 500;
-  background-color: var(--s-bg);
+.eyeBtn:hover {
   color: var(--text);
-  outline: none;
-  border: none;
-}
-.div input:focus-within {
-  border: 1px solid var(--accent);
-  background-color: var(--bg);
 }
 
-.redirect {
-  color: var(--s-text);
-  font-weight: 500;
-  font-size: 1rem;
-  text-transform: capitalize;
-}
-
+/* ── Role selector ─────────────────────────────── */
 .roleGroup {
   display: flex;
   flex-direction: column;
   gap: 8px;
-
-  font-size: 14px;
 }
 
-.roleGroup label {
+.roleOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.radioHidden {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.roleOption {
   display: flex;
   align-items: center;
-  gap: 8px;
-
+  justify-content: center;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--s-text);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--s-text);
   cursor: pointer;
+  transition:
+    border-color 0.15s,
+    color 0.15s,
+    background 0.15s;
+  user-select: none;
 }
 
-@media (max-width: 800px) {
-  h1 {
-    font-size: 1.5rem;
+.roleOption:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.roleActive {
+  border-color: var(--accent);
+  background: rgba(255, 72, 0, 0.08);
+  color: var(--accent);
+}
+
+/* ── Submit button ─────────────────────────────── */
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 4px;
+  transition:
+    opacity 0.2s,
+    transform 0.15s;
+}
+
+.submitBtn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.submitBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Spinner ───────────────────────────────────── */
+.spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
-@media (max-width: 450px) {
-  h1 {
-    font-size: 1rem;
+
+/* ── Redirect ──────────────────────────────────── */
+.redirect {
+  text-align: center;
+  font-size: 14px;
+  color: var(--s-text);
+  margin: 0;
+}
+
+.redirectLink {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.redirectLink:hover {
+  text-decoration: underline;
+}
+
+/* ── Responsive ────────────────────────────────── */
+@media (max-width: 480px) {
+  .card {
+    padding: 24px 20px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
   }
 }

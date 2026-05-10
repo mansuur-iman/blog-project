@@ -1,157 +1,330 @@
-@import url("https://fonts.googleapis.com/css2?family=Playwrite+DK+Uloopet+Guides&display=swap");
-
-nav {
-  height: 65px;
-  background-color: var(--bg);
-  display: flex;
-  justify-content: flex-end;
+/* ── Nav bar ───────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
   align-items: center;
+  padding: 0 32px;
+  height: 56px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--s-bg);
 }
 
-.linksContainer {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-nav a {
-  height: 100%;
-  padding: 0 1.2rem;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: var(--text);
-}
-
-nav a:hover {
-  background-color: var(--accent);
-}
-
-nav .homeLink {
-  margin-right: auto;
-  font-family: "Playwrite DK Uloopet Guides", sans-serif;
-  font-weight: bold;
-  font-size: 2rem;
+/* ── Brand ─────────────────────────────────────── */
+.brand {
+  font-size: 22px;
+  font-weight: 700;
   color: var(--accent);
-  background-color: var(--text);
-  border-radius: 50%;
+  text-decoration: none;
+  font-family: "Pacifico", cursive;
+  justify-self: start;
 }
 
-nav .homeLink:hover {
-  background-color: var(--text);
-}
-
-nav svg {
-  color: var(--text);
-}
-
-.input {
-  display: none;
-}
-
-.open-sidebar-button,
-.close-sidebar-button {
-  display: none;
-}
-
-.searchContainer {
+/* ── Search form (desktop) ─────────────────────── */
+.searchForm {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
   display: flex;
-  flex-direction: row; /* Force row alignment */
-  flex-wrap: nowrap; /* Prevent wrapping to a second line */
-  align-items: center; /* Vertically center icon and text */
-  gap: 10px; /* Modern way to add space between icon and input */
-
-  width: 200px; /* Give it a defined width */
-  background-color: var(--bg);
-  border-radius: 2rem;
-  padding: 5px 15px; /* Adjust padding for a sleeker look */
-  border: 1px solid transparent; /* Temporary border to see the box */
-  transition: border 0.5s ease-out;
+  align-items: center;
+  gap: 8px;
+  background: var(--s-bg);
+  border-radius: 999px;
+  padding: 7px 16px;
+  border: 1px solid transparent;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
-.searchContainer:focus-within {
-  border: 1px solid var(--accent);
+
+.searchForm:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 72, 0, 0.1);
 }
 
 .searchIcon {
-  color: var(--text);
-  cursor: pointer;
+  color: var(--s-text);
   flex-shrink: 0;
 }
 
-.toggleIcon {
-  cursor: pointer;
-  border: none;
-  align-items: center;
-  background-color: var(--bg);
-}
-
-.toggleIcon svg {
-  color: var(--text);
-}
-
 .searchInput {
-  width: 100%;
   border: none;
   outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-family: inherit;
   color: var(--text);
-  background-color: transparent;
-  font-size: 1rem;
-  opacity: 1;
+  width: 100%;
 }
 
-@media (max-width: 800px) {
-  nav .homeLink {
-    font-size: 1.5rem;
+.searchInput::placeholder {
+  color: var(--s-text);
+  opacity: 0.7;
+}
+
+/* ── Right actions ─────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-self: end;
+}
+
+/* ── Icon button ───────────────────────────────── */
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  flex-shrink: 0;
+}
+
+.iconBtn:hover {
+  background: var(--s-bg);
+  color: var(--accent);
+}
+
+/* ── Avatar button ─────────────────────────────── */
+.avatarBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition:
+    opacity 0.15s,
+    transform 0.15s;
+  font-family: inherit;
+}
+
+.avatarBtn:hover {
+  opacity: 0.88;
+  transform: scale(1.05);
+}
+
+/* ── Auth links ────────────────────────────────── */
+.loginLink {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+
+.loginLink:hover {
+  color: var(--accent);
+}
+
+.signupBtn {
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  background: var(--accent);
+  text-decoration: none;
+  padding: 7px 16px;
+  border-radius: 8px;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.signupBtn:hover {
+  opacity: 0.88;
+}
+
+/* ── Hamburger (mobile only) ───────────────────── */
+.hamburger {
+  display: none;
+}
+
+/* ── Overlay ───────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 40;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
-@media (max-width: 450px) {
-  .linksContainer {
-    flex-direction: column;
-    align-items: flex-start;
+/* ── Mobile drawer ─────────────────────────────── */
+.drawer {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  background: var(--bg);
+  border-bottom: 1px solid var(--s-bg);
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: translateY(-110%);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-    position: fixed;
-    top: 0;
-    right: -100%;
-    z-index: 10;
-    width: 300px;
+.drawerOpen {
+  transform: translateY(0);
+}
 
-    background-color: var(--bg);
-    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
+.drawerSearch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--s-bg);
+  border-radius: 999px;
+  padding: 8px 14px;
+  margin-bottom: 4px;
+}
 
-    transition: 0.75s ease-out;
+.drawerSearch:focus-within {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.drawerLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  text-align: left;
+}
+
+.drawerLink:hover {
+  background: var(--s-bg);
+  color: var(--accent);
+}
+
+/* ── Drawer user info ──────────────────────────── */
+.drawerUser {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--s-bg);
+  border-radius: 10px;
+  margin-bottom: 4px;
+}
+
+.drawerAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.drawerUserInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.drawerUsername {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.drawerRole {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+}
+
+/* ── Drawer logged-out ─────────────────────────── */
+.drawerPrompt {
+  font-size: 13px;
+  color: var(--s-text);
+  padding: 4px 4px 8px;
+  line-height: 1.5;
+}
+
+.drawerLoginBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 14px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.drawerLoginBtn:hover {
+  opacity: 0.88;
+}
+
+/* ── Responsive ────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav {
+    grid-template-columns: 1fr auto;
+    padding: 0 16px;
   }
 
-  nav a {
-    height: auto;
-    width: 100%;
-    padding: 1.2rem 1.4rem;
-    justify-content: flex-start;
+  .searchForm {
+    display: none;
   }
 
-  nav .homeLink {
-    font-size: 1.2rem;
-    justify-content: center;
-    padding: 1rem;
+  .hamburger {
+    display: flex;
   }
 
-  .open-sidebar-button,
-  .close-sidebar-button {
-    padding: 1.2rem;
-    display: block;
-  }
-
-  .input:checked ~ .linksContainer {
-    right: 0;
-  }
-  .input:checked ~ .overlay {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9;
+  .loginLink,
+  .signupBtn {
+    display: none;
   }
 }
