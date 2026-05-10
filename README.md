@@ -85,7 +85,7 @@ This frontend consumes the shared [Blog API](https://github.com/mansuur-iman/blo
 
 ```bash
 git clone https://github.com/mansuur-iman/blog-project.git
-cd blog-project
+cd myblog-reader
 npm install
 npm run dev
 ```
@@ -100,7 +100,7 @@ The app runs at `http://localhost:5173` by default.
 src/
 ├── api/            # fetch helpers
 ├── components/     # page components (Home, Blog, Search, Profile…)
-│   └── context/    # Auth and Theme context providers
+│  
 └── App.jsx         # router config
 ```
 
