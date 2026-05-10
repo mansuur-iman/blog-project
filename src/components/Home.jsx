@@ -2,7 +2,7 @@ import useAuth from "../context/useAuth";
 import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { useNavigate, Link } from "react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Feather } from "lucide-react";
 
 export default function Home() {
   const { token } = useAuth();
@@ -59,7 +59,8 @@ export default function Home() {
     return (
       <div className={styles.guestWrap}>
         <div className={styles.guestCard}>
-          <div className={styles.guestIcon}>✦</div>
+          <Feather size={48} className={styles.guestIcon} />
+
           <h1 className={styles.guestTitle}>
             {error === "expired" ? "Session expired" : "Welcome to myBlog"}
           </h1>
