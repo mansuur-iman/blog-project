@@ -1,75 +1,114 @@
-# Blog Project (Reader Frontend)
+# myBlog — Reader Frontend
 
-A modern blog reader frontend built with React and Vite that connects to the Blog API backend.
+A modern blog reader frontend built with React and Vite, connected to a shared Blog API backend. Users can create accounts, browse published posts, read full articles, and interact through comments.
 
-Users can create accounts, browse published blogs, read full articles, and interact through comments.  
-This application is designed for readers and general users of the platform.
+---
+
+![Home Feed](./home.png)
+
+---
+
+## Live Demo
+
+**[https://blog-reader-five.vercel.app/](https://blog-reader-five.vercel.app/)**
 
 ---
 
 ## Tech Stack
 
-- React
-- Vite
-- React Router
-- CSS Modules / Custom CSS
-- Blog API Backend
-- JWT Authentication
+- **React** — UI library
+- **Vite** — build tool
+- **React Router** — client-side routing
+- **CSS Modules** — scoped component styling
+- **JWT Authentication** — token-based auth via localStorage
+- **Blog API** — shared REST backend
+
+---
+
+## Screenshots
+
+### Home Feed
+![Home Feed](./home.png)
+Featured post hero with a 3-column post grid. Posts are sorted by newest first.
+
+### Blog Post & Comments
+![Blog Post](./blog.png)
+Full article view with cover image, author metadata, rich prose content, and a comment thread.
+
+### Guest Landing
+![Guest Landing](./guest.png)
+Unauthenticated users see a clean welcome screen with Log in and Create account CTAs.
 
 ---
 
 ## Features
 
 ### Authentication
+- User signup with role selection (Reader / Author)
+- User login with JWT token storage
+- Session expiry handling with guest landing screen
+- Protected routes for authenticated interactions
 
-- User signup
-- User login
-- Role selection during signup
-  - Reader
-  - Author
+### Blog
+- Paginated home feed of all published posts
+- Featured post hero (newest post)
+- Full article view with rich HTML content
+- Author chip, date metadata, and cover image
+- Light / dark theme toggle
 
-> Author accounts are later used to access the author dashboard frontend.
+### Comments
+- View comments on any blog post
+- Post a comment (authenticated users only)
+- Anonymous fallback for users without display names
 
----
-
-## Blog Features
-
-- View all published blogs
-- Open and read full blog posts
-- View blog metadata
-- Responsive blog layout
-- Dynamic routing for posts
-
----
-
-## Comment System
-
-- Add comments to blog posts
-- View existing comments
-- Authentication-protected interactions
+### Search
+- Search posts by keyword from the navbar
+- Results page with post cards and metadata
 
 ---
 
 ## Backend Integration
 
-This frontend consumes data from a shared Blog API backend that handles:
+This frontend consumes the shared [Blog API](https://blog-api-7iix.onrender.com) which handles:
 
-- Authentication
-- Authorization
-- Blog management
-- Comments
-- Database operations
+- User registration and login
+- JWT issuance and validation
+- Published post retrieval
+- Comment creation and listing
+- Role-based access (Reader / Author)
+
+> Author accounts created here can be used to access the separate [Author Dashboard](https://blog-author-ten.vercel.app).
 
 ---
 
 ## Installation
 
-Clone the repository:
-
 ```bash
 git clone https://github.com/mansuur-iman/blog-project.git
-
 cd blog-project
-
 npm install
 npm run dev
+```
+
+The app runs at `http://localhost:5173` by default.
+
+---
+
+## Project Structure
+
+```
+src/
+├── api/            # fetch helpers
+├── components/     # page components (Home, Blog, Search, Profile…)
+│   └── context/    # Auth and Theme context providers
+└── App.jsx         # router config
+```
+
+---
+
+## Related Repos
+
+| Repo | Description |
+|------|-------------|
+| [blog-author](https://github.com/mansuur-iman/blog-author) | Author dashboard frontend |
+| [blog-api](https://blog-api-7iix.onrender.com) | Shared REST API backend |
