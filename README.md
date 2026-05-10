@@ -69,7 +69,7 @@ Unauthenticated users see a clean welcome screen with Log in and Create account 
 
 ## Backend Integration
 
-This frontend consumes the shared [Blog API]([https://blog-api-7iix.onrender.com](https://github.com/mansuur-iman/blog-api)) which handles:
+This frontend consumes the shared [Blog API](https://github.com/mansuur-iman/blog-api) which handles:
 
 - User registration and login
 - JWT issuance and validation
@@ -77,7 +77,7 @@ This frontend consumes the shared [Blog API]([https://blog-api-7iix.onrender.com
 - Comment creation and listing
 - Role-based access (Reader / Author)
 
-> Author accounts created here can be used to access the separate [Author Dashboard]([https://blog-author-ten.vercel.app](https://blog-author-ten.vercel.app/login)).
+> Author accounts created here can be used to access the separate [Author Dashboard](https://blog-author-ten.vercel.app/login).
 
 ---
 
@@ -111,4 +111,4 @@ src/
 | Repo | Description |
 |------|-------------|
 | [blog-author](https://github.com/mansuur-iman/blog-author) | Author dashboard frontend |
-| [blog-api](https://blog-api-7iix.onrender.com) | Shared REST API backend |
+| [blog-api](https://github.com/mansuur-iman/blog-api)| Shared REST API backend |
